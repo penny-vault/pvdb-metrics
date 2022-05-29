@@ -186,7 +186,7 @@ func AssetsNoCUSIP(conn *pgxpool.Pool) float64 {
 
 func AssetsNoFigi(conn *pgxpool.Pool) float64 {
 	var cnt int
-	err := conn.QueryRow(context.Background(), "SELECT count(*) AS cnt FROM eod WHERE event_date::date = (now() - '1 day'::interval)::date").Scan(&cnt)
+	err := conn.QueryRow(context.Background(), "SELECT count(*) AS cnt FROM assets WHERE composite_figi = ''").Scan(&cnt)
 	if err != nil {
 		log.Error().Err(err).Msg("failed to retrieve assets w/ no figi")
 		return 0
